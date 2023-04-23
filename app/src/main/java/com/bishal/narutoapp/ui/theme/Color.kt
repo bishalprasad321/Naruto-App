@@ -23,3 +23,15 @@ val Colors.titleColor
 val Colors.descriptionColor
     @Composable
     get() = if(isLight) DarkGrey.copy(0.5f) else LightGrey.copy(0.5f)
+
+val Colors.activeIndicatorColor
+    @Composable
+    get() = if (isLight) Purple500 else Purple700
+
+val Colors.inactiveIndicatorColor
+    @Composable
+    get() = if (isLight) LightGrey else DarkGrey
+
+val Colors.buttonBackgroundColor
+    @Composable
+    get() = if (isLight) Purple500 else Purple700

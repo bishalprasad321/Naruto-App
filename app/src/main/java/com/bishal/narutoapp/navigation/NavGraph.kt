@@ -6,6 +6,7 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import com.bishal.narutoapp.presentation.screens.home.HomeScreen
 import com.bishal.narutoapp.presentation.screens.splash.SplashScreen
 import com.bishal.narutoapp.presentation.screens.welcome.WelcomeScreen
 import com.bishal.narutoapp.util.Constants.DETAILS_ARGUMENT_KEY
@@ -25,7 +26,7 @@ fun SetupNavGraph(navController: NavHostController) {
             WelcomeScreen(navController = navController)
         }
         composable(route = Screen.Home.route) {
-
+            HomeScreen()
         }
         composable(
             route = Screen.Details.route,
