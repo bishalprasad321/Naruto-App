@@ -19,10 +19,11 @@ object DatabaseModule {
     @Singleton
     fun provideDatabase(
         @ApplicationContext context: Context
-    ) = Room.databaseBuilder(
-        context,
-        NarutoDatabase::class.java,
-        NARUTO_DATABASE
-    ).build()
-
+    ): NarutoDatabase {
+        return Room.databaseBuilder(
+            context,
+            NarutoDatabase::class.java,
+            NARUTO_DATABASE
+        ).build()
+    }
 }

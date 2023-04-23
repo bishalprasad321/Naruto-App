@@ -27,6 +27,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import com.bishal.narutoapp.R
 import com.bishal.narutoapp.domain.model.OnBoardingPage
+import com.bishal.narutoapp.navigation.Screen
 import com.bishal.narutoapp.ui.theme.EXTRA_LARGE_PADDING
 import com.bishal.narutoapp.ui.theme.PAGING_INDICATOR_SPACING
 import com.bishal.narutoapp.ui.theme.PAGING_INDICATOR_WIDTH
@@ -89,6 +90,8 @@ fun WelcomeScreen(
             modifier = Modifier.weight(1f),
             pagerState = pagerState
         ) {
+            navController.popBackStack()
+            navController.navigate(Screen.Home.route)
             welcomeViewModel.saveOnBoardingState(completed = true)
         }
     }
