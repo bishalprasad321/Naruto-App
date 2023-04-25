@@ -1,6 +1,10 @@
 package com.bishal.narutoapp.di
 
+import androidx.paging.ExperimentalPagingApi
+import com.bishal.narutoapp.data.local.NarutoDatabase
 import com.bishal.narutoapp.data.remote.NarutoApi
+import com.bishal.narutoapp.data.respository.RemoteDataSourceImpl
+import com.bishal.narutoapp.domain.repository.RemoteDatasource
 import com.bishal.narutoapp.util.Constants.BASE_URL
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import dagger.Module
@@ -16,6 +20,7 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
 @ExperimentalSerializationApi
+@ExperimentalPagingApi
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
@@ -44,5 +49,17 @@ object NetworkModule {
     @Singleton
     fun provideNarutoApi(retrofit: Retrofit): NarutoApi {
         return retrofit.create(NarutoApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideRemoteDataSource(
+        narutoApi: NarutoApi,
+        narutoDatabase: NarutoDatabase
+    ): RemoteDatasource {
+        return RemoteDataSourceImpl(
+            narutoApi = narutoApi,
+            narutoDatabase = narutoDatabase
+        )
     }
 }
