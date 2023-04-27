@@ -158,7 +158,7 @@ fun EmptyStar(
 
 @Composable
 fun calculateStars(rating: Double): Map<String, Int> {
-    var maxStars by remember { mutableStateOf(5) }
+    val maxStars by remember { mutableStateOf(5) }
     var filledStars by remember { mutableStateOf(0) }
     var halfFilledStars by remember { mutableStateOf(0) }
     var emptyStars by remember { mutableStateOf(0) }
@@ -185,6 +185,7 @@ fun calculateStars(rating: Double): Map<String, Int> {
         else{
             Log.d("RatingWidget", "Invalid rating number")
         }
+        emptyStars = maxStars - (filledStars + halfFilledStars)
     }
     return mapOf(
         "filledStars" to filledStars,

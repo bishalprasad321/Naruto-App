@@ -6,12 +6,14 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import coil.annotation.ExperimentalCoilApi
 import com.bishal.narutoapp.presentation.screens.home.HomeScreen
 import com.bishal.narutoapp.presentation.screens.splash.SplashScreen
 import com.bishal.narutoapp.presentation.screens.welcome.WelcomeScreen
 import com.bishal.narutoapp.util.Constants.DETAILS_ARGUMENT_KEY
 import com.google.accompanist.pager.ExperimentalPagerApi
 
+@ExperimentalCoilApi
 @ExperimentalPagerApi
 @Composable
 fun SetupNavGraph(navController: NavHostController) {

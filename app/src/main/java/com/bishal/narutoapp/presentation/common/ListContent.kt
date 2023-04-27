@@ -1,16 +1,20 @@
 package com.bishal.narutoapp.presentation.common
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ContentAlpha
 import androidx.compose.material.MaterialTheme
@@ -30,6 +34,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import androidx.paging.compose.LazyPagingItems
+import androidx.paging.compose.items
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.rememberAsyncImagePainter
 import com.bishal.narutoapp.R
@@ -40,16 +45,31 @@ import com.bishal.narutoapp.ui.theme.HERO_ITEM_HEIGHT
 import com.bishal.narutoapp.ui.theme.LARGE_PADDING
 import com.bishal.narutoapp.ui.theme.MEDIUM_PADDING
 import com.bishal.narutoapp.ui.theme.SMALL_PADDING
-import com.bishal.narutoapp.ui.theme.Shapes
 import com.bishal.narutoapp.ui.theme.topAppBarContentColor
 import com.bishal.narutoapp.util.Constants.BASE_URL
 
+@ExperimentalCoilApi
 @Composable
 fun ListContent(
     heroes: LazyPagingItems<Hero>,
     navController: NavHostController
 ) {
-
+    Log.d("ListContent", heroes.loadState.toString())
+    LazyColumn(
+        contentPadding = PaddingValues(all = SMALL_PADDING),
+        verticalArrangement = Arrangement.spacedBy(SMALL_PADDING)
+    ){
+        items(
+            items = heroes,
+            key = { hero->
+                hero.id
+            }
+        ) {hero->
+            hero?.let {
+                HeroItem(hero = it, navController = navController)
+            }
+        }
+    }
 }
 
 @ExperimentalCoilApi
@@ -72,7 +92,7 @@ fun HeroItem(
             },
         contentAlignment = Alignment.BottomStart
     ) {
-        Surface(shape = Shapes.large) {
+        Surface(shape = RoundedCornerShape(size = LARGE_PADDING)) {
             Image(
                 modifier = Modifier.fillMaxSize(),
                 painter = painter,
@@ -138,7 +158,7 @@ fun HeroItemPreview() {
             id = 1,
             name = "Sauske",
             image = "",
-            about = "Some random text...",
+            about = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce tristique turpis nisi, a placerat ante sodales eget. Fusce lobortis, arcu sed dapibus eleifend, risus quam auctor purus, sit amet vestibulum metus orci sed nulla. Donec et porttitor metus. Fusce porttitor ac metus at dictum. Proin convallis dui sapien, eget faucibus urna cursus at. Fusce a hendrerit orci, sit amet elementum sem. Integer diam eros, pellentesque non semper sit amet, lobortis vel orci. Integer pellentesque ultrices lectus sed vestibulum. Nam sit amet tellus sit amet libero luctus maximus. Mauris non tellus nec elit molestie feugiat. Maecenas condimentum, nulla at tempor feugiat, nisl velit mattis eros, vel iaculis nisi turpis ut dolor. Mauris sed ipsum massa. Proin at efficitur massa. Fusce sit amet ullamcorper magna. Donec dictum tempus lacus, vitae hendrerit velit iaculis id.",
             rating = 4.2,
             power = 100,
             month = "",
@@ -160,7 +180,7 @@ fun HeroItemDarkPreview() {
             id = 1,
             name = "Sauske",
             image = "",
-            about = "Some random text...",
+            about = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce tristique turpis nisi, a placerat ante sodales eget. Fusce lobortis, arcu sed dapibus eleifend, risus quam auctor purus, sit amet vestibulum metus orci sed nulla. Donec et porttitor metus. Fusce porttitor ac metus at dictum. Proin convallis dui sapien, eget faucibus urna cursus at. Fusce a hendrerit orci, sit amet elementum sem. Integer diam eros, pellentesque non semper sit amet, lobortis vel orci. Integer pellentesque ultrices lectus sed vestibulum. Nam sit amet tellus sit amet libero luctus maximus. Mauris non tellus nec elit molestie feugiat. Maecenas condimentum, nulla at tempor feugiat, nisl velit mattis eros, vel iaculis nisi turpis ut dolor. Mauris sed ipsum massa. Proin at efficitur massa. Fusce sit amet ullamcorper magna. Donec dictum tempus lacus, vitae hendrerit velit iaculis id.",
             rating = 4.2,
             power = 100,
             month = "",
