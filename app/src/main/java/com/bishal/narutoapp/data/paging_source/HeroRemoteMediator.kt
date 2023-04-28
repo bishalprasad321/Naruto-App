@@ -9,7 +9,6 @@ import com.bishal.narutoapp.data.local.NarutoDatabase
 import com.bishal.narutoapp.data.remote.NarutoApi
 import com.bishal.narutoapp.domain.model.Hero
 import com.bishal.narutoapp.domain.model.HeroRemoteKeys
-import java.lang.Exception
 import javax.inject.Inject
 
 
@@ -50,8 +49,21 @@ class HeroRemoteMediator @Inject constructor(
             }
     }
 
+    override suspend fun initialize(): InitializeAction {
+        val currentTime = System.currentTimeMillis()
+        val lastUpdated = heroRemoteKeysDao.getRemoteKeys(heroId = 1)?.lastUpdated ?: 0L
+        val cacheTimeout = 1440
+
+        val diffInMinutes = (currentTime - lastUpdated) / 1000 / 60
+        return if (diffInMinutes.toInt() <= cacheTimeout){
+            InitializeAction.SKIP_INITIAL_REFRESH
+        } else {
+            InitializeAction.LAUNCH_INITIAL_REFRESH
+        }
+    }
+
     override suspend fun load(loadType: LoadType, state: PagingState<Int, Hero>): MediatorResult {
-        return try{
+        return try {
             val page = when (loadType) {
                 LoadType.REFRESH -> {
                     val remoteKeys = getRemoteKeyClosestToCurrentPosition(state)
@@ -88,7 +100,8 @@ class HeroRemoteMediator @Inject constructor(
                         HeroRemoteKeys (
                             id = hero.id,
                             prevPage = prevPage,
-                            nextPage = nextPage
+                            nextPage = nextPage,
+                            lastUpdated = response.lastUpdated
                         )
                     }
                     heroRemoteKeysDao.addAllRemoteKeys(heroRemoteKeys = keys)
@@ -100,4 +113,10 @@ class HeroRemoteMediator @Inject constructor(
             return MediatorResult.Error(e)
         }
     }
+
+//    private fun parseMillis(millis: Long): String {
+//        val date = Date(millis)
+//        val format = SimpleDateFormat("yyyy.MM.dd HH:mm", Locale.ROOT)
+//        return format.format(date)
+//    }
 }
