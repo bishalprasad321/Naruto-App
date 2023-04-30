@@ -12,7 +12,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class SlashViewModel @Inject constructor(
+class SplashViewModel @Inject constructor(
     private val useCases: UseCases
 ): ViewModel() {
 

@@ -7,11 +7,13 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.bishal.narutoapp.domain.model.Hero
 import com.bishal.narutoapp.domain.use_cases.UseCases
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+@HiltViewModel
 class SearchViewModel @Inject constructor(
     private val useCases: UseCases
 ): ViewModel() {

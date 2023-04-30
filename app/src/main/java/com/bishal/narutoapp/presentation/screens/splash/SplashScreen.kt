@@ -31,7 +31,7 @@ import com.bishal.narutoapp.ui.theme.Purple700
 @Composable
 fun SplashScreen(
     navController: NavHostController,
-    splashViewModel: SlashViewModel = hiltViewModel()
+    splashViewModel: SplashViewModel = hiltViewModel()
 ) {
 
     val onBoardingCompleted by splashViewModel.onBoardingCompleted.collectAsState()

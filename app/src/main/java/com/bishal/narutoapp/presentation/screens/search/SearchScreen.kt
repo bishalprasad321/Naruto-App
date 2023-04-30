@@ -10,8 +10,8 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import coil.annotation.ExperimentalCoilApi
 import com.bishal.narutoapp.presentation.common.ListContent
 
-@ExperimentalCoilApi
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
+@ExperimentalCoilApi
 @Composable
 fun SearchScreen(
     navController: NavHostController,
