@@ -28,46 +28,65 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.paging.LoadState
+import androidx.paging.compose.LazyPagingItems
 import com.bishal.narutoapp.R
+import com.bishal.narutoapp.domain.model.Hero
 import com.bishal.narutoapp.ui.theme.DarkGrey
 import com.bishal.narutoapp.ui.theme.LightGrey
 import com.bishal.narutoapp.ui.theme.NETWORK_ERROR_ICON_HEIGHT
 import com.bishal.narutoapp.ui.theme.SMALL_PADDING
+import com.google.accompanist.swiperefresh.SwipeRefresh
+import com.google.accompanist.swiperefresh.rememberSwipeRefreshState
 import java.net.ConnectException
 import java.net.SocketTimeoutException
 
 @Composable
-fun EmptyScreen(error: LoadState.Error? = null) {
-    var message by remember {
-        mutableStateOf("Find your Favourite Hero!")
-    }
-    var icon by remember {
-        mutableStateOf(R.drawable.ic_search_document)
-    }
-
-    if (error != null) {
-        message = parseErrorMessage(error = error)
-        icon = R.drawable.ic_network_error
+fun EmptyScreen(
+    error: LoadState.Error? = null,
+    heroes: LazyPagingItems<Hero>? = null
+) {
+    var isRefreshing by remember {
+        mutableStateOf(false)
     }
 
-    var startAnimation by remember { mutableStateOf(false) }
-    val alphaAnim by animateFloatAsState(
-        targetValue = if(startAnimation) ContentAlpha.disabled else 0f,
-        animationSpec = tween(
-            durationMillis = 1000
+    SwipeRefresh(
+        state = rememberSwipeRefreshState(isRefreshing = isRefreshing),
+        onRefresh = {
+
+        }
+    ) {
+        var message by remember {
+            mutableStateOf("Find your Favourite Hero!")
+        }
+        var icon by remember {
+            mutableStateOf(R.drawable.ic_search_document)
+        }
+
+        if (error != null) {
+            message = parseErrorMessage(error = error)
+            icon = R.drawable.ic_network_error
+        }
+
+        var startAnimation by remember { mutableStateOf(false) }
+        val alphaAnim by animateFloatAsState(
+            targetValue = if(startAnimation) ContentAlpha.disabled else 0f,
+            animationSpec = tween(
+                durationMillis = 1000
+            )
         )
-    )
-    LaunchedEffect(key1 = true){
-        startAnimation = true
+        LaunchedEffect(key1 = true){
+            startAnimation = true
+        }
+        EmptyContent(alphaAnim = alphaAnim, icon = icon, message = message)
     }
-    EmptyContent(alphaAnim = alphaAnim, icon = icon, message = message)
 }
 
 @Composable
 fun EmptyContent(
     alphaAnim: Float,
     icon: Int,
-    message: String
+    message: String,
+    heroes: LazyPagingItems<Hero>? = null
 ) {
     Column(
         modifier = Modifier.fillMaxSize(),

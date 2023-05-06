@@ -1,6 +1,7 @@
 package com.bishal.narutoapp.presentation.common
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -86,6 +87,8 @@ fun handlePagingResult(
             loadState.append is LoadState.Error -> loadState.append as LoadState.Error
             else -> null
         }
+
+        Log.d("LoadState", LoadState.NotLoading.toString())
 
         return when {
             loadState.refresh is LoadState.Loading -> {
