@@ -1,4 +1,4 @@
-package com.bishal.narutoapp.presentation.common
+package com.bishal.narutoapp.presentation.components
 
 import android.content.res.Configuration.UI_MODE_NIGHT_YES
 import androidx.compose.animation.core.FastOutLinearInEasing

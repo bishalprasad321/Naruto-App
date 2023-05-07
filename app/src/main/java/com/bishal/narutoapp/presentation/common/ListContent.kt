@@ -41,7 +41,8 @@ import coil.compose.rememberAsyncImagePainter
 import com.bishal.narutoapp.R
 import com.bishal.narutoapp.domain.model.Hero
 import com.bishal.narutoapp.navigation.Screen
-import com.bishal.narutoapp.presentation.screens.components.RatingWidget
+import com.bishal.narutoapp.presentation.components.RatingWidget
+import com.bishal.narutoapp.presentation.components.ShimmerEffect
 import com.bishal.narutoapp.ui.theme.HERO_ITEM_HEIGHT
 import com.bishal.narutoapp.ui.theme.LARGE_PADDING
 import com.bishal.narutoapp.ui.theme.MEDIUM_PADDING
@@ -62,7 +63,7 @@ fun ListContent(
             contentPadding = PaddingValues(all = SMALL_PADDING),
             verticalArrangement = Arrangement.spacedBy(SMALL_PADDING)
         ){
-            items(
+            items (
                 items = heroes,
                 key = { hero->
                     hero.id
@@ -96,11 +97,11 @@ fun handlePagingResult(
                 false
             }
             error != null -> {
-                EmptyScreen(error = error)
+                EmptyScreen(error = error, heroes = heroes)
                 false
             }
             heroes.itemCount < 1 -> {
-                EmptyScreen()
+                EmptyScreen(error = null, heroes = null)
                 false
             }
             else -> true

@@ -1,4 +1,4 @@
-package com.bishal.narutoapp.presentation.screens.components
+package com.bishal.narutoapp.presentation.components
 
 import android.util.Log
 import androidx.compose.foundation.Canvas
